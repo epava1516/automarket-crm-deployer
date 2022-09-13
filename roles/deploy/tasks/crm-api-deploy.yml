@@ -1,0 +1,27 @@
+---
+# tasks file for deploy
+- name: Set fact
+  ansible.builtin.set_fact:
+    api_composer_path: "{{ composer_path }}/api"
+
+- name: Ensure api composer path exists
+  ansible.builtin.file:
+    path: "{{ api_composer_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Generate docker-compose
+  ansible.builtin.template:
+    src: docker-compose-crm-api.yml.j2
+    dest: "{{ api_composer_path }}/docker-compose.yml"
+    mode: '0644'
+
+# - name: Generate var file for api docker-compose
+#   ansible.builtin.template:
+#     src: varfile.env.j2
+#     dest: "{{ api_composer_path }}/varfile.env"
+#     mode: '0644'
+
+- name: Running docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ api_composer_path }}"

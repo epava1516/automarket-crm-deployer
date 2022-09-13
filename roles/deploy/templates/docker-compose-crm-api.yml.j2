@@ -1,0 +1,18 @@
+version: "3.7"
+
+networks:
+  crm-api:
+    external: false
+  nginx_nginx_network:
+    external: true
+
+services:
+  crm-api:
+    container_name: "crm-api"
+    image: "{{ api_crm_image }}:latest"
+    restart: unless-stopped
+    {% comment %} env_file:
+      - "{{ composer_path }}/api/varfile.env" {% endcomment %}
+    networks:
+      - crm-api
+      - nginx_nginx_network

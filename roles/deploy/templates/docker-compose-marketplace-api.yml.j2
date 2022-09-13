@@ -10,10 +10,10 @@ services:
   {{ client_name }}-{{ client_id }}-marketplace:
     container_name: "{{ client_name }}-{{ client_id }}-marketplace"
     hostname: "{{ client_name }}-{{ client_id }}-marketplace"
-    image: "{{ marketplace_image }}:latest"
+    image: "{{ api_marketplace_image }}:latest"
     restart: unless-stopped
     env_file:
-      - "{{ client_path }}/varfile.env"
+      - "{{ client_path_api }}/varfile.env"
     networks:
       - {{ client_name }}-{{ client_id }}-marketplace
       - nginx_nginx_network

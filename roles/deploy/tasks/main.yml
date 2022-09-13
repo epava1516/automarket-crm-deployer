@@ -1,31 +1,24 @@
 ---
-# tasks file for deploy
-- name: Set fact
-  ansible.builtin.set_fact:
-    client_path: "{{ composer_path }}/{{ client_name }}-{{ client_id }}"
+- name: Deploy front-marketplace image
+  ansible.builtin.import_tasks: marketplace-front-deploy.yml
+  tags:
+    - marketplace
+    - front
 
-- name: Ensure base docker images exists
-  ansible.builtin.debug:
-    msg: "Pulling Docker"
+- name: Deploy api-marketplace image
+  ansible.builtin.import_tasks: marketplace-api-deploy.yml
+  tags:
+    - marketplace
+    - api
 
-- name: Ensure client's composer path exists
-  ansible.builtin.file:
-    path: "{{ client_path }}"
-    state: directory
-    mode: '0755'
+- name: Deploy front-crm image
+  ansible.builtin.import_tasks: crm-front-deploy.yml
+  tags:
+    - crm
+    - front
 
-- name: Generate docker-compose
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: "{{ client_path }}/docker-compose.yml"
-    mode: '0644'
-
-- name: Generate var file for client's docker-compose
-  ansible.builtin.template:
-    src: varfile.env.j2
-    dest: "{{ client_path }}/varfile.env"
-    mode: '0644'
-
-- name: Running docker-compose
-  community.docker.docker_compose:
-    project_src: "{{ client_path }}"
+- name: Deploy api-crm image
+  ansible.builtin.import_tasks: crm-api-deploy.yml
+  tags:
+    - crm
+    - api

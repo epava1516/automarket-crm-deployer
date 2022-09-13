@@ -8,6 +8,15 @@ Para el despliegue pasaremos por un proceso de construccion en las correspondien
 Para la construcción de las imagenes utilizaremos el siguiente comando
 
 ```bash
-ansible-playbook build.yml --tag ["marketplace", "crm", "api", "front"]
+ansible-playbook build.yml --tag ["all", "marketplace", "crm", "api", "front"]
 ```
 Eligiendo entre los correspondientes tags que se deseen `compilar`.
+
+## Deploy
+Para el despliegue de los contenedores se hará uso del siguiente comando
+
+```bash
+ansible-playbook deploy.yml --tag ["all", "marketplace", "crm", "api", "front"]
+```
+
+Eligiendo entre los correspondientes tags que se deseen `desplegar`.

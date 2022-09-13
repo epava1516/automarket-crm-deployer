@@ -1,0 +1,27 @@
+---
+# tasks file for deploy
+- name: Set fact
+  ansible.builtin.set_fact:
+    front_composer_path: "{{ composer_path }}/front"
+
+- name: Ensure front composer path exists
+  ansible.builtin.file:
+    path: "{{ front_composer_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Generate docker-compose
+  ansible.builtin.template:
+    src: docker-compose-crm-front.yml.j2
+    dest: "{{ front_composer_path }}/docker-compose.yml"
+    mode: '0644'
+
+# - name: Generate var file for front docker-compose
+#   ansible.builtin.template:
+#     src: varfile.env.j2
+#     dest: "{{ front_composer_path }}/varfile.env"
+#     mode: '0644'
+
+- name: Running docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ front_composer_path }}"

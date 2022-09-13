@@ -1,0 +1,18 @@
+version: "3.7"
+
+networks:
+  crm-front:
+    external: false
+  nginx_nginx_network:
+    external: true
+
+services:
+  crm-front:
+    container_name: "crm-front"
+    image: "{{ front_crm_image }}:latest"
+    restart: unless-stopped
+    {% comment %} env_file:
+      - "{{ composer_path }}/front/varfile.env" {% endcomment %}
+    networks:
+      - crm-front
+      - nginx_nginx_network

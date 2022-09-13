@@ -1,0 +1,31 @@
+---
+# tasks file for deploy
+- name: Set fact
+  ansible.builtin.set_fact:
+    client_path: "{{ composer_path }}/{{ client_name }}-{{ client_id }}"
+    client_path_front: "{{ client_path }}/front"
+
+- name: Ensure client's composer path exists
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  with_items:
+    - "{{ client_path }}"
+    - "{{ client_path_front }}"
+
+- name: Generate docker-compose
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ client_path_front }}/docker-compose.yml"
+    mode: '0644'
+
+- name: Generate var file for client's docker-compose
+  ansible.builtin.template:
+    src: varfile.env.j2
+    dest: "{{ client_path_front }}/varfile.env"
+    mode: '0644'
+
+- name: Running docker-compose
+  community.docker.docker_compose:
+    project_src: "{{ client_path_front }}"
