@@ -1,0 +1,24 @@
+---
+- name: Build front-marketplace image
+  ansible.builtin.import_tasks: marketplace-front-build.yml
+  tags:
+    - marketplace
+    - front
+
+- name: Build api-marketplace image
+  ansible.builtin.import_tasks: marketplace-api-build.yml
+  tags:
+    - marketplace
+    - api
+
+- name: Build front-crm image
+  ansible.builtin.import_tasks: crm-front-build.yml
+  tags:
+    - crm
+    - front
+
+- name: Build api-crm image
+  ansible.builtin.import_tasks: crm-api-build.yml
+  tags:
+    - crm
+    - api

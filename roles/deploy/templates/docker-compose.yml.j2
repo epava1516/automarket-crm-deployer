@@ -1,0 +1,19 @@
+version: "3.7"
+
+networks:
+  {{ client_name }}-{{ client_id }}-marketplace:
+    external: false
+  nginx_nginx_network:
+    external: true
+
+services:
+  {{ client_name }}-{{ client_id }}-marketplace:
+    container_name: "{{ client_name }}-{{ client_id }}-marketplace"
+    hostname: "{{ client_name }}-{{ client_id }}-marketplace"
+    image: "{{ marketplace_image }}:latest"
+    restart: unless-stopped
+    env_file:
+      - "{{ client_path }}/varfile.env"
+    networks:
+      - {{ client_name }}-{{ client_id }}-marketplace
+      - nginx_nginx_network

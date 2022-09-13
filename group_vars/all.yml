@@ -1,0 +1,28 @@
+---
+opt_workdir: "/opt"
+builder_path: "{{ opt_workdir }}/builder"
+composer_path: "{{ opt_workdir }}/composer"
+
+
+# CRM
+## Front
+front_crm_repo: "git@github.com:epava1516/front-crm.git"
+front_crm_image: "autocrm-front"
+front_crm_version: "1"
+
+## Api
+api_crm_repo: "git@github.com:epava1516/api-crm.git"
+api_crm_image: "autocrm-api"
+api_crm_version: "1"
+
+
+# Marketplace
+## Front
+front_marketplace_repo: "git@github.com:epava1516/marketplace-front.git"
+front_marketplace_image: "automarketplace-front"
+front_marketplace_version: "1"
+
+## Api
+api_marketplace_repo: "git@github.com:epava1516/marketplace-api.git"
+api_marketplace_image: "automarketplace-api"
+api_marketplace_version: "1"

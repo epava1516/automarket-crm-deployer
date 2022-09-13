@@ -1,0 +1,23 @@
+---
+- name: Set image path
+  ansible.builtin.set_fact:
+    image_path: "{{ builder_path }}/{{ front_marketplace_image }}"
+
+- name: Ensure client's composer path exists
+  ansible.builtin.file:
+    path: "{{ builder_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Git clone marketplace repo
+  ansible.builtin.git:
+    repo: "{{ front_marketplace_repo }}"
+    dest: "{{ image_path }}"
+
+- name: Build Docker
+  ansible.builtin.docker_image:
+    build:
+      path: "{{ image_path }}/Dockerfile"
+    name: "{{ front_marketplace_image }}"
+    tag: "{{ front_marketplace_version }}"
+    source: build

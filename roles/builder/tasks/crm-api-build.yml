@@ -1,0 +1,23 @@
+---
+- name: Set image path
+  ansible.builtin.set_fact:
+    image_path: "{{ builder_path }}/{{ api_crm_image }}"
+
+- name: Ensure composer path exists
+  ansible.builtin.file:
+    path: "{{ builder_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Git clone marketplace repo
+  ansible.builtin.git:
+    repo: "{{ api_crm_repo }}"
+    dest: "{{ image_path }}"
+
+- name: Build Docker
+  ansible.builtin.docker_image:
+    build:
+      path: "{{ image_path }}/Dockerfile"
+    name: "{{ api_crm_image }}"
+    tag: "{{ api_crm_version }}"
+    source: build
