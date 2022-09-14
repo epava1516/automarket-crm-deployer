@@ -1,0 +1,11 @@
+- name: Ensure composer path exists
+  ansible.builtin.file:
+    path: "{{ composer_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Ensure builder paths exists
+  ansible.builtin.file:
+    path: "{{ builder_path }}"
+    state: directory
+    mode: '0755'

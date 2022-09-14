@@ -1,2 +1,10 @@
 ---
 # tasks file for setup
+- name: Instalar docker
+  ansible.builtin.import_tasks: docker.yml
+
+- name: Crear directorios para CRM
+  ansible.builtin.import_tasks: crm.yml
+
+- name: Crear directorios para MarketPlace
+  ansible.builtin.import_tasks: marketplace.yml

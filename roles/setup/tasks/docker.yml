@@ -1,0 +1,27 @@
+---
+- name: Instalar Docker Repo
+  ansible.builtin.yum_repository:
+    name: docker
+    baseurl:
+      - https://download.docker.com/linux/centos/docker-ce.repo
+
+- name: Instalar Docker
+  ansible.builtin.dnf:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+
+- name: Enable Docker service
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: restarted
+
+- name: Add user to Docker Group
+  ansible.builtin.user:
+    name: "{{ user }}"
+    groups: "docker"
+    append: true
